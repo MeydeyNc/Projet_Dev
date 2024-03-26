@@ -5,5 +5,8 @@
   "main": "index.js",
   "repository": "https://github.com/MeydeyNc/Projet_Dev.git",
   "author": "we are three mmederic ajoel bmaxime",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "yarn": "^1.22.22"
+  }
 }
