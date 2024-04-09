@@ -10,8 +10,8 @@ import {
   useFormContext,
 } from 'react-hook-form';
 
-import { cn } from '@/lib/utils';
-import { Label } from '@/components/ui/label';
+import { cn } from '/home/jancel/Projet_Dev/planify/src/app/components/lib/utils';
+import { Label } from '/home/jancel/Projet_Dev/planify/src/app/components/ui/label';
 
 const Form = FormProvider;
 
