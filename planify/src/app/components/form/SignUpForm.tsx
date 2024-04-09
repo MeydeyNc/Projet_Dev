@@ -14,7 +14,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Input } from '../ui/input';
 import { Button } from '../ui/button';
 import Link from 'next/link';
-import GoogleSignInButton from '/home/jancel/Projet_Dev/planify/src/app/GoogleSignInButton';
+import GoogleSignInButton from '@/app/GoogleSignInButton';
 
 const FormSchema = z
   .object({

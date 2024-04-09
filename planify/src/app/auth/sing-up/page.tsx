@@ -1,4 +1,4 @@
-import SignUpForm from '/home/jancel/Projet_Dev/planify/src/app/components/form/SignUpForm';
+import SignUpForm from '@/app/components/form/SignUpForm';
 
 const page = () => {
   return (

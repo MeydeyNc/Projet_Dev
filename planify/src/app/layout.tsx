@@ -1,5 +1,5 @@
-import Navbar from '/home/jancel/Projet_Dev/planify/src/app/Navbar';
-import '/home/jancel/Projet_Dev/planify/src/app/components/styles/globals.css';
+import Navbar from '@/app/Navbar';
+import '@/app/components/styles/globals.css';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 

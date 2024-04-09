@@ -1,5 +1,5 @@
 import { FC, ReactNode } from 'react';
-import { Button } from '/home/jancel/Projet_Dev/planify/src/app/components/ui/button';
+import { Button } from '@/app/components/ui/button';
 
 interface GoogleSignInButtonProps {
   children: ReactNode;
