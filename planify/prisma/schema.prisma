@@ -1,0 +1,53 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            Int        @id @default(autoincrement())
+  username      String     @unique
+  email         String     @unique
+  password      String
+  created_at    DateTime   @default(now())
+  updated_at    DateTime   @updatedAt
+  isAdmin       Boolean    @default(false)
+  owned_lists   List[]
+  // transition    Transition @relation(fields: [transition_id], references: [id])
+  // transition_id Int        @unique
+}
+
+model List {
+  id            Int        @id @default(autoincrement())
+  list_name     String
+  created_at    DateTime   @default(now())
+  updated_at    DateTime   @updatedAt
+  owner         User       @relation(fields: [owner_id], references: [id])
+  owner_id      Int
+  tasks_in_list Task[]
+  // transition    Transition @relation(fields: [transition_id], references: [id])
+  // transition_id Int        @unique
+}
+
+model Task {
+  id               Int        @id @default(autoincrement())
+  task_name        String
+  task_description String?
+  due_date         DateTime?
+  created_at       DateTime   @default(now())
+  updated_at       DateTime   @updatedAt
+  from_list        List       @relation(fields: [list_id], references: [id])
+  list_id          Int
+  // transition       Transition @relation(fields: [transition_id], references: [id])
+  // transition_id    Int        @unique 
+}
+
+// model Transition {
+//   id      Int    @id @default(autoincrement())
+//   users   User[] 
+//   lists   List[]
+//   tasks   Task[]
+// }
