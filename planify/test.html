@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calendrier</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        .cell {
+            width: calc(100% / 7);
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid #ddd;
+        }
+
+        .cell:hover {
+            background-color: #f0f0f0;
+        }
+
+        @media (max-width: 400px) {
+            .cell {
+                width: calc(100% / 7);
+                font-size: 10px;
+            }
+        }
+        .container {
+            max-width: 300px;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-100 h-screen">
+    <div class="container mx-auto py-4">
+        <div class="flex justify-center mb-2">
+            <button class="px-2 py-1 mr-1 bg-blue-500 text-white rounded hover:bg-blue-600" onclick="prevMonth()">Précédent</button>
+            <h2 class="text-sm font-bold" id="monthYear"></h2>
+            <button class="px-2 py-1 ml-1 bg-blue-500 text-white rounded hover:bg-blue-600" onclick="nextMonth()">Suivant</button>
+        </div>
+        <div class="flex">
+            <div class="cell font-bold">Dim</div>
+            <div class="cell font-bold">Lun</div>
+            <div class="cell font-bold">Mar</div>
+            <div class="cell font-bold">Mer</div>
+            <div class="cell font-bold">Jeu</div>
+            <div class="cell font-bold">Ven</div>
+            <div class="cell font-bold">Sam</div>
+        </div>
+        <div id="calendar" class="flex flex-wrap"></div>
+    </div>
+
+    <script>
+        const monthYearText = document.getElementById('monthYear');
+        const calendarContainer = document.getElementById('calendar');
+
+        let currentDate = new Date();
+        let currentMonth = currentDate.getMonth();
+        let currentYear = currentDate.getFullYear();
+
+        function renderCalendar(month, year) {
+            calendarContainer.innerHTML = '';
+            monthYearText.textContent = `${getMonthName(month)} ${year}`;
+
+            const firstDayOfMonth = new Date(year, month, 1);
+            const lastDayOfMonth = new Date(year, month + 1, 0);
+            const startDay = firstDayOfMonth.getDay();
+            const daysInMonth = lastDayOfMonth.getDate();
+
+            let cellIndex = 0;
+
+            for (let i = 0; i < startDay; i++) {
+                const cell = createCell('');
+                calendarContainer.appendChild(cell);
+                cellIndex++;
+            }
+
+            for (let day = 1; day <= daysInMonth; day++) {
+                const cell = createCell(day);
+                calendarContainer.appendChild(cell);
+                cellIndex++;
+            }
+
+            while (cellIndex % 7 !== 0) {
+                const cell = createCell('');
+                calendarContainer.appendChild(cell);
+                cellIndex++;
+            }
+        }
+
+        function createCell(day) {
+            const cell = document.createElement('div');
+            cell.textContent = day;
+            cell.className = 'cell';
+            return cell;
+        }
+
+        function getMonthName(month) {
+            const monthNames = [
+                "Jan", "Fév", "Mar", "Avr", "Mai", "Jui",
+                "Jui", "Aoû", "Sep", "Oct", "Nov", "Déc"
+            ];
+            return monthNames[month];
+        }
+
+        function nextMonth() {
+            currentMonth++;
+            if (currentMonth > 11) {
+                currentMonth = 0;
+                currentYear++;
+            }
+            renderCalendar(currentMonth, currentYear);
+        }
+
+        function prevMonth() {
+            currentMonth--;
+            if (currentMonth < 0) {
+                currentMonth = 11;
+                currentYear--;
+            }
+            renderCalendar(currentMonth, currentYear);
+        }
+
+        renderCalendar(currentMonth, currentYear);
+    </script>
+</body>
+
+</html>

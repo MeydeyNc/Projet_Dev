@@ -67,6 +67,32 @@
             </div>
         </div>
     </div>
+    <div class="grid grid-cols-2 grid-flow-col gap-4 justify-center mt-8 px-4 py-4"> <!-- Alignement -->
+        <div class="grid grid-cols-1 gap-4"> <!--calendrier-->
+            <div class="flex justify-center mb-2">
+                <button class="px-2 py-1 mr-1 bg-red-400 text-white rounded hover:bg-red-600" onclick="prevMonth()">Précédent</button>
+                <h2 class="text-sm font-bold px-2 py-2" id="monthYear"></h2>
+                <button class="px-2 py-1 ml-1 bg-red-400 text-white rounded hover:bg-red-600" onclick="nextMonth()">Suivant</button>
+            </div>
+            <div class="flex">
+                <div class="cell font-bold">Dim</div>
+                <div class="cell font-bold">Lun</div>
+                <div class="cell font-bold">Mar</div>
+                <div class="cell font-bold">Mer</div>
+                <div class="cell font-bold">Jeu</div>
+                <div class="cell font-bold">Ven</div>
+                <div class="cell font-bold">Sam</div>
+            </div>
+            <div id="calendar" class="flex flex-wrap"></div>
+        </div>
+        <div class="grid grid-cols-1 gap-4"> <!--task pannel 3-->
+            <div class="bg-gray-200 p-4 rounded-lg">
+                <h2 class="text-xl font-bold">Tâche 1</h2>
+                <p class="mt-2">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec purus
+                    ultricies, ultricies nunc nec, ultricies nunc.</p>
+            </div>
+        </div>
+    </div>
     <footer class="bg-gray-800 text-white py-4 mt-4">
         <div class="container mx-auto text-center">
             &copy; 2024 Planify
@@ -107,6 +133,77 @@
         setInterval(updateClock, 1000);
 
         updateClock();
+        const monthYearText = document.getElementById('monthYear');
+        const calendarContainer = document.getElementById('calendar');
+
+        let currentDate = new Date();
+        let currentMonth = currentDate.getMonth();
+        let currentYear = currentDate.getFullYear();
+
+        function renderCalendar(month, year) {
+            calendarContainer.innerHTML = '';
+            monthYearText.textContent = `${getMonthName(month)} ${year}`;
+
+            const firstDayOfMonth = new Date(year, month, 1);
+            const lastDayOfMonth = new Date(year, month + 1, 0);
+            const startDay = firstDayOfMonth.getDay();
+            const daysInMonth = lastDayOfMonth.getDate();
+
+            let cellIndex = 0;
+
+            for (let i = 0; i < startDay; i++) {
+                const cell = createCell('');
+                calendarContainer.appendChild(cell);
+                cellIndex++;
+            }
+
+            for (let day = 1; day <= daysInMonth; day++) {
+                const cell = createCell(day);
+                calendarContainer.appendChild(cell);
+                cellIndex++;
+            }
+
+            while (cellIndex % 7 !== 0) {
+                const cell = createCell('');
+                calendarContainer.appendChild(cell);
+                cellIndex++;
+            }
+        }
+
+        function createCell(day) {
+            const cell = document.createElement('div');
+            cell.textContent = day;
+            cell.className = 'cell';
+            return cell;
+        }
+
+        function getMonthName(month) {
+            const monthNames = [
+                "Jan", "Fév", "Mar", "Avr", "Mai", "Jui",
+                "Jui", "Aoû", "Sep", "Oct", "Nov", "Déc"
+            ];
+            return monthNames[month];
+        }
+
+        function nextMonth() {
+            currentMonth++;
+            if (currentMonth > 11) {
+                currentMonth = 0;
+                currentYear++;
+            }
+            renderCalendar(currentMonth, currentYear);
+        }
+
+        function prevMonth() {
+            currentMonth--;
+            if (currentMonth < 0) {
+                currentMonth = 11;
+                currentYear--;
+            }
+            renderCalendar(currentMonth, currentYear);
+        }
+
+        renderCalendar(currentMonth, currentYear);
     </script>
     <style>
     .clock-container {
@@ -156,10 +253,17 @@
         font-size: 18px;
     }
 
-    .grid {
-        display: grid;
-        grid-template-columns: repeat(1, minmax(0, 1fr));
-        gap: 2rem;
+    .cell {
+        width: calc(100% / 7);
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 1px solid #ddd;
+    }
+
+    .cell:hover {
+        background-color: #f0f0f0;
     }
     </style>
     </body>
