@@ -1,0 +1,59 @@
+.clock-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.clock {
+    position: relative;
+    width: 200px;
+    height: 200px;
+    border: 2px solid black;
+    border-radius: 50%;
+    margin: 0 auto;
+}
+
+.hour, .minute, .second {
+    position: absolute;
+    width: 4px;
+    background-color: black;
+    transform-origin: center bottom;
+    transform: rotate(90deg);
+    left: calc(50% - 2px);
+    border-radius: 10rem;
+}
+
+.hour {
+    height: 40px;
+    top: 60px;
+}
+.minute {
+    height: 70px;
+    top: 30px;
+}
+
+.second {
+    height: 90px;
+    background-color: red;
+    top: 10px;
+}
+
+.date {
+    margin-top: 10px;
+    font-size: 18px;
+}
+
+.cell {
+    width: calc(100% / 7);
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #ddd;
+}
+
+.cell:hover {
+    background-color: #f0f0f0;
+}
