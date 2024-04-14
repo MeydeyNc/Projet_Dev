@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { buttonVariants } from '/home/jancel/Projet_Dev/planify/src/app/components/ui/button';
+import { buttonVariants } from '../components/ui/button';
 import { HandMetal } from 'lucide-react';
 
 const Navbar = () => {
