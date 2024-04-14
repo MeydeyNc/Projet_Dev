@@ -1,9 +1,0 @@
-{
-  "name": "Planify",
-  "version": "1.0.0",
-  "description": "To-do-list app to make ur day better",
-  "main": "index.js",
-  "repository": "https://github.com/MeydeyNc/Projet_Dev.git",
-  "author": "we are three mmederic ajoel bmaxime",
-  "license": "MIT"
-}
