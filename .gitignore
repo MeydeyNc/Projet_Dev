@@ -10,7 +10,7 @@
 /planify/coverage
 
 # next.js
-/planify/.next/
+/planify/.next
 /planify/out/
 
 # production
@@ -20,6 +20,7 @@
 .DS_Store
 *.pem
 /planify/*.pem
+/planify/*.DS_Store
 
 # debug
 npm-debug.log*
@@ -38,5 +39,5 @@ yarn-error.log*
 /planify/next-env.d.ts
 next-env.d.ts
 
-
+# local database
 /planify/*.db
