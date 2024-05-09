@@ -13,6 +13,9 @@ const Navbar = async () => {
         <Link href='/'>
           <HandMetal />
         </Link>
+        <Link className={buttonVariants()} href='/admin'>
+          Admin Dashboard
+        </Link>
         {session?.user ? (
           <UserAccountnav />
         ) : (
@@ -20,6 +23,7 @@ const Navbar = async () => {
             Sign in
           </Link>
         )}
+
       </div>
     </div>
   );

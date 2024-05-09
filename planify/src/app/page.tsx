@@ -1,20 +1,22 @@
-import { buttonVariants } from "@/components/ui/button";
+import React from "react";
 import { authOptions } from "@/lib/auth";
 import { User } from "lucide-react";
 import { getServerSession } from "next-auth";
-import  Link from 'next/link';
+import Clock from "@/components/ui/Clock/Clock";
+
+
 
 export default async function Home() {
 
   const session = await getServerSession(authOptions);
 
   return (
+    
     <div>
-      <h1 className='text-4xl'>Planify</h1>
-      <Link className={buttonVariants()} href='/admin'>
-        Admin Dashboard
-      </Link>
+      <h1 className='text-4xl flex justify-center'>Planify</h1>
 
+      <Clock title="Bonsoir" datediff={0} />
+    
       <h2>Client Session</h2>
       <User />
       <h2>Server Session</h2>
