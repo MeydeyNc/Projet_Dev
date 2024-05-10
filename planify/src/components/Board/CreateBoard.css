@@ -1,0 +1,12 @@
+.CreateBoardTrigger {
+    
+}
+
+.CreateColumn:hover {
+    background-color: gray;
+    block-size: auto;
+}
+
+.new-column {
+    color: black;
+}

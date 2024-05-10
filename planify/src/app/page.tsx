@@ -1,8 +1,10 @@
 import React from "react";
 import { authOptions } from "@/lib/auth";
-import { User } from "lucide-react";
+
 import { getServerSession } from "next-auth";
 import Clock from "@/components/ui/Clock/Clock";
+import Board from "@/components/Board/Board";
+import CreateBoard from "@/components/Board/CreateBoard";
 
 
 
@@ -11,16 +13,22 @@ export default async function Home() {
   const session = await getServerSession(authOptions);
 
   return (
-    
-    <div>
-      <h1 className='text-4xl flex justify-center'>Planify</h1>
-
-      <Clock title="Bonsoir" datediff={0} />
-    
-      <h2>Client Session</h2>
-      <User />
-      <h2>Server Session</h2>
-      {JSON.stringify(session)}
+    <div className="flex">
+      <div className="w-1/3">
+        {/* Left container for future calendar */}
+      </div>
+      <div className="w-1/3">
+        <div className="flex justify-center"> {/* Add this div */}
+          <Clock title="" datediff={0} />
+        </div>
+      </div>
+      <div className="">
+        <CreateBoard />
+      </div>
+      <div className="w-1/3">
+        {/* Right container for Board */}
+        <Board />
+      </div>
     </div>
   );
 }
