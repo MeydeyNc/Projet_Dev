@@ -1,73 +1,91 @@
-"use client";
-import React,{useEffect, useState} from "react";
-import posts from '/home/jancel/Projet_Dev/planify/src/app/components/post/page'
-import useSWR from "swr";
-import { fetcher } from "../libs";
-import Post from "/home/jancel/Projet_Dev/planify/src/app/components/post";
-import { PostModel } from "../types";
-import Link from "next/link";
+// pages/posts.tsx
 
-export default function Posts() {
-  const [posts,setPosts] = useState<PostModel[]>([]);
-  const { data, error, isLoading } = useSWR<any>(`/api/posts`, fetcher);
-  useEffect(()=>{
-    if(data && data.result.data)
-    {
-      console.log(data.result.data);
-      setPosts(data.result.data);
-    }
-  },[data,isLoading]);
-  if (error) return <div>Failed to load</div>;
-  if (isLoading) return <div>Loading...</div>;
-  if (!data) return null;
-  let delete_Post : PostModel['deletePost']= async (id:number) => {
-    const res = await fetch(`/api/posts/${id}`, {
-      method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json'
+import { useState, useEffect } from 'react';
+import prisma from '/home/jancel/Projet_Dev/planify/prisma/schema.prisma';
+
+const PostsPage = () => {
+  const [posts, setPosts] = useState([]);
+  const [newPostContent, setNewPostContent] = useState('');
+  const [updatingPostId, setUpdatingPostId] = useState(null);
+  const [updatedPostContent, setUpdatedPostContent] = useState('');
+
+  useEffect(() => {
+    fetchPosts();
+  }, []);
+
+  const fetchPosts = async () => {
+    const fetchedPosts = await prisma.post.findMany();
+    setPosts(fetchedPosts);
+  };
+
+  const createPost = async () => {
+    await prisma.post.create({
+      data: {
+        content: newPostContent,
       },
     });
-    const content = await res.json();
-    if(content.success>0)
-    {
+    setNewPostContent('');
+    fetchPosts();
+  };
 
-      setPosts(posts?.filter((post:PostModel)=>{  return post.id !== id  }));
-    }
-  }
+  const updatePost = async () => {
+    await prisma.post.update({
+      where: {
+        id: updatingPostId,
+      },
+      data: {
+        content: updatedPostContent,
+      },
+    });
+    setUpdatingPostId(null);
+    setUpdatedPostContent('');
+    fetchPosts();
+  };
+
+  const deletePost = async (postId) => {
+    await prisma.post.delete({
+      where: {
+        id: postId,
+      },
+    });
+    fetchPosts();
+  };
+
   return (
-    <div className="w-full max-w-7xl m-auto">
-      <table className="w-full border-collapse border border-slate-400">
-        <caption className="caption-top py-5 font-bold text-green-500 text-2xl">
-          List Posts - Counter :
-          <span className="text-red-500 font-bold">{ posts?.length}</span>
-        </caption>
-
-        <thead>
-          <tr className="text-center">
-            <th className="border border-slate-300">ID</th>
-            <th className="border border-slate-300">Title</th>
-            <th className="border border-slate-300">Hide</th>
-            <th className="border border-slate-300">Created at</th>
-            <th className="border border-slate-300">Modify</th>
-          </tr>
-        </thead>
-        <tbody>
-           <tr>
-              <td colSpan={5}>
-                 <Link href={`/post/create`} className="bg-green-500 p-2 inline-block text-white">Create</Link>
-              </td>
-           </tr>
-           {
-              posts && posts.map((item : PostModel)=><Post key={item.id} {...item} deletePost = {delete_Post} />)
-           }
-        </tbody>
-      </table>
+    <div>
+      <h1>Posts</h1>
+      <div>
+        <h2>Create Post</h2>
+        <input
+          type="text"
+          value={newPostContent}
+          onChange={(e) => setNewPostContent(e.target.value)}
+        />
+        <button onClick={createPost}>Create</button>
+      </div>
+      <div>
+        <h2>Update Post</h2>
+        <input
+          type="text"
+          value={updatedPostContent}
+          onChange={(e) => setUpdatedPostContent(e.target.value)}
+        />
+        <button onClick={updatePost}>Update</button>
+      </div>
+      <div>
+        <h2>Posts</h2>
+        <ul>
+          {posts.map((post) => (
+            <li key={post.id}>
+              {post.content}
+              <button onClick={() => setUpdatingPostId(post.id)}>Edit</button>
+              <button onClick={() => deletePost(post.id)}>Delete</button>
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
-}
+};
 
-export default function Home() {
-  return (
-        <Posts />
-  )
-}
+export default PostsPage;
