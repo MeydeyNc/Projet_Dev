@@ -1,36 +1,51 @@
 'use client';
 
 import React from 'react';
-import Column from '../Columns/Columns';
+import List from '../Lists/List';
+import NewListForm from '../Form/NewListForm';
 
 
-const columns = [
-    { id: '0', name: 'todo', index: 0, tasks: [] },
-    { id: '1', name: 'shopping', index: 1, tasks: [] },
-    { id: '2', name: 'plans', index: 2, tasks: [] },
+const defaultListDisplayed = [
+    { id: 'List0', name: 'Première liste', index: 0, tasks: [] },
+    { id: 'List1', name: 'Deuxième liste', index: 1, tasks: [] },
+    { id: 'List2', name: 'Troisième liste', index: 2, tasks: [] }
 ];
 
 export type TaskType = {
-    id: number;
     name: string;
-    order: number;
-    description: string[];
+    id: string | number;
+    index: number;
+    listId: string | number;
 };
 
-const tasks = [
-    { id: 0, columnId: '0', name: 'task 1', order: 0, description: ["Bonsoir"] },
-    { id: 1, columnId: '1', name: 'task 2', order: 1, description: ["C'est sympa ici"] },
-    { id: 2, columnId: '2', name: 'task 3', order: 2, description: ["Non bof"] },
+const defaultTasks = [
+    { id: '0', name: 'task 1', index: 0, listId: 'List0' },
+    { id: '3', name: 'task 2', index: 1, listId: 'List0' },
+    { id: '1', name: 'Banane', index: 1, listId: 'List1' },
+    { id: '2', name: 'Developper', index: 2, listId: 'List2' }
 ];
 
+
 export default function Board() {
+    const [tasks, setTasks] = React.useState(defaultTasks);
+    const [lists, setLists] = React.useState(defaultListDisplayed);
     return (
-        <div className="flex gap-4">
+        <div className="flex gap-5">
 
-            {columns.map(column => (
-                <Column {...column} tasks={tasks} />
+            {lists.map(list => (
+                < List 
+                {...list} 
+                setTasks={setTasks}
+                tasks={
+                    tasks
+                    .sort((a, b) => a.index - b.index)
+                    .filter(c => c.listId === list.id)
+                } />
             ))}
-
+            {/* <NewListForm /> */}
+            <div className='flex flex-grow  '>
+                <NewListForm />
+            </div>
         </div>
     );
 }
