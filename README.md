@@ -1,13 +1,24 @@
 # Projet_Dev
 
-Pour le set up : 
+Bienvenue sur notre projet Planify
 
-check si yarn & nodeJs installed déjà avec npm --version ou -v 
+planify c'est quoi ?
 
-Si pas yarn : npm install --global yarn 
+Planify est une plateforme de gestion de tâches à faire
 
-cd /planify
+Pour lancer le projet rien de trop sorcier :
 
-yarn install 
+![sorcier](/picture/sorcier.gif)
 
-yarn dev pour lancer le serveur
+On vérifie si `yarn` & `nodeJS` sont déja installés avec `npm --version`
+
+Dans le cas ou yarn n'est pas présent un petit
+ `npm install --global yarn`
+
+ensuite on va dans le dossier planify
+
+`cd /planify`
+
+On initialise le projet `yarn install`
+
+Et `yarn dev` pour lancer le serveur et ensuite plus qu'à ce rendre sur `localhost:3000/` 
