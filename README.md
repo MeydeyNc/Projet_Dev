@@ -2,7 +2,7 @@
 
 Bienvenue sur notre projet Planify
 
-planify c'est quoi ?
+Planify c'est quoi ?
 
 Planify est une plateforme de gestion de tâches à faire
 
