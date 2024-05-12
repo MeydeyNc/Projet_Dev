@@ -8,10 +8,10 @@ import { ListProps } from '../Lists/List';
 
 
 const defaultTasks = [
-    { id: '0', task_name: 'task 1', task_description: 'Hello World', due_date: '2 May 2024',  order: 0, listId: 'List0' },
-    { id: '3', task_name: 'banane', task_description: 'Super ça', due_date: '2 May 2024',  order: 1, listId: 'List2' },
-    { id: '2', task_name: 'task 2', task_description: 'World Hello', due_date: '2 May 2024',  order: 2, listId: 'List0' },
-    { id: '1', task_name: 'Developpeur', task_description: 'Ca code aled', due_date: '2 May 2024',  order: 0, listId: 'List1' }
+    { id: '0', task_name: 'task 1', task_description: 'Hello World', due_date: '14 Mai 2024',  order: 0, listId: 'List0' },
+    { id: '3', task_name: 'Banane', task_description: 'Super ça', due_date: '2 Avril 2024',  order: 1, listId: 'List2' },
+    { id: '2', task_name: 'D20', task_description: 'Cest un d20', due_date: '24 Juin 2024',  order: 2, listId: 'List0' },
+    { id: '1', task_name: 'Developpeur', task_description: 'Ca code pabien', due_date: '14 Mars 2023',  order: 0, listId: 'List1' }
     
 ];
 
