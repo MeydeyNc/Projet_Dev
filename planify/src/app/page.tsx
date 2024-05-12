@@ -24,11 +24,7 @@ export default async function Home() {
       </div>
       <div className="w-1/2">
         <div>
-          <Link 
-          className="btn-primary inline-flex mb-4"
-          href='/new-board'>
-            Create new Board &rarr;
-            </Link>
+          <Board />
         </div>
       </div>
     </div>

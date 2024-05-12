@@ -3,28 +3,23 @@
 import React from 'react';
 import List from '../Lists/List';
 import NewListForm from '../Form/NewListForm';
+import NewTaskForm from '../Form/NewTaskForm';
+import { ListProps } from '../Lists/List';
 
-
-const defaultListDisplayed = [
-    { id: 'List0', name: 'Première liste', index: 0, tasks: [] },
-    { id: 'List1', name: 'Deuxième liste', index: 1, tasks: [] },
-    { id: 'List2', name: 'Troisième liste', index: 2, tasks: [] }
-];
-
-export type TaskType = {
-    name: string;
-    id: string | number;
-    index: number;
-    listId: string | number;
-};
 
 const defaultTasks = [
-    { id: '0', name: 'task 1', index: 0, listId: 'List0' },
-    { id: '3', name: 'task 2', index: 1, listId: 'List0' },
-    { id: '1', name: 'Banane', index: 1, listId: 'List1' },
-    { id: '2', name: 'Developper', index: 2, listId: 'List2' }
+    { id: '0', task_name: 'task 1', task_description: 'Hello World', due_date: '2 May 2024',  order: 0, listId: 'List0' },
+    { id: '3', task_name: 'banane', task_description: 'Super ça', due_date: '2 May 2024',  order: 1, listId: 'List2' },
+    { id: '2', task_name: 'task 2', task_description: 'World Hello', due_date: '2 May 2024',  order: 2, listId: 'List0' },
+    { id: '1', task_name: 'Developpeur', task_description: 'Ca code aled', due_date: '2 May 2024',  order: 0, listId: 'List1' }
+    
 ];
 
+const defaultListDisplayed = [
+    { id: 'List0', list_name: 'Première liste', owner: 'toto', index: 0, tasks: [] },
+    { id: 'List1', list_name: 'Deuxième liste', owner: 'toto', index: 1, tasks: [] },
+    { id: 'List2', list_name: 'Troisième liste', owner: 'toto', index: 2, tasks: [] }
+];
 
 export default function Board() {
     const [tasks, setTasks] = React.useState(defaultTasks);
@@ -39,13 +34,14 @@ export default function Board() {
                 setTasks={setTasks}
                 tasks={
                     tasks
-                    .sort((a, b) => a.index - b.index)
+                    .sort((a, b) => a.order - b.order)
                     .filter(c => c.listId === list.id)
                 } />
             ))}
             {/* <NewListForm /> */}
             <div className='flex flex-grow  '>
                 <NewListForm />
+                <NewTaskForm />
             </div>
         </div>
     );

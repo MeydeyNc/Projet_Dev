@@ -2,18 +2,28 @@
 
 import React, { SetStateAction } from 'react';
 import { ReactSortable } from 'react-sortablejs';
-import { TaskType } from '../Board/Board';
+import { TaskType } from '../Task/Task';
+import prisma from '@/lib/prisma';
+
+export type ListType = {
+    id: number | string;
+    list_name: string;
+    owner: string;
+    index: number;
+    tasks: TaskType[];
+}
 
 
-
-interface ListProps {
+export interface ListProps {
     id: string | number;
-    name: string;
+    list_name: string;
+    owner: string;
+    index: number;
     tasks: TaskType[];
     setTasks: SetStateAction<any>;
 }
 
-export default function List({ id, name, tasks, setTasks }: ListProps) {
+export default function List({ id, list_name, tasks, owner, setTasks }: ListProps) {
 
     function setTasksForList(sortedTasks: TaskType[], newListId: string | number) {
 
@@ -22,7 +32,7 @@ export default function List({ id, name, tasks, setTasks }: ListProps) {
             sortedTasks.forEach((sortedTask: TaskType, newIndex: number) => {
                 const foundTask = newTasks.find(newTask => newTask.id === sortedTask.id);
                 if (foundTask) {
-                    foundTask.index = newIndex;
+                    foundTask.order = newIndex;
                     foundTask.listId = newListId;
                 }
             });
@@ -31,7 +41,8 @@ export default function List({ id, name, tasks, setTasks }: ListProps) {
     }
     return (
         <div className=" bg-white shadow-sm rounded-md p-8 ">
-            <h4>{name}</h4>
+            <h4>{list_name}</h4>
+            <p>owner : {owner}</p>
             <ReactSortable
                 list={tasks}
                 setList={items => setTasksForList(items, id)}
@@ -41,7 +52,15 @@ export default function List({ id, name, tasks, setTasks }: ListProps) {
             >
                 {tasks.map(task => (
                     <div key={task.id} className='border bg-white my-2 p-4 rounded-md'>
-                        <span>{task.name}</span>
+                        <div>
+                            <span>{task.task_name}</span>
+                        </div>
+                        <div>
+                            <span>Description : {task.task_description}</span>
+                        </div>
+                        <div>
+                            <span>Date limite : {task.due_date}</span>
+                        </div>
                     </div>
                 ))}
             </ReactSortable>
