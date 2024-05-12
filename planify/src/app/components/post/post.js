@@ -1,7 +1,5 @@
-// pages/posts.tsx
-
 import { useState, useEffect } from 'react';
-import prisma from '/home/jancel/Projet_Dev/planify/prisma/schema.prisma';
+import prisma from '@prisma/client';
 
 const PostsPage = () => {
   const [posts, setPosts] = useState([]);
@@ -27,6 +25,7 @@ const PostsPage = () => {
     setNewPostContent('');
     fetchPosts();
   };
+  
 
   const updatePost = async () => {
     await prisma.post.update({
