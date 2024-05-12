@@ -3,6 +3,7 @@ import { authOptions } from "@/lib/auth";
 import { getServerSession } from "next-auth";
 import Clock from "@/components/ui/Clock/Clock";
 import Board from "@/components/Board/Board";
+import Link from "next/link";
 
 
 
@@ -22,8 +23,13 @@ export default async function Home() {
         </div>
       </div>
       <div className="w-1/2">
-        {/* Right container for Board */}
-        <Board />
+        <div>
+          <Link 
+          className="btn-primary inline-flex mb-4"
+          href='/new-board'>
+            Create new Board &rarr;
+            </Link>
+        </div>
       </div>
     </div>
   );
