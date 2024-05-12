@@ -21,4 +21,6 @@ ensuite on va dans le dossier planify
 
 On initialise le projet `yarn install`
 
+On installe la base de donnée `yarn prisma migrate dev`
+
 Et `yarn dev` pour lancer le serveur et ensuite plus qu'à ce rendre sur `localhost:3000/` 
