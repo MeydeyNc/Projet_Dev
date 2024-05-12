@@ -36,9 +36,11 @@ export default function List({ id, name, tasks, setTasks }: ListProps) {
                 list={tasks}
                 setList={items => setTasksForList(items, id)}
                 group="tasks"
+                className="min-h-12"
+                ghostClass="opacity-40"
             >
                 {tasks.map(task => (
-                    <div className='border'>
+                    <div key={task.id} className='border bg-white my-2 p-4 rounded-md'>
                         <span>{task.name}</span>
                     </div>
                 ))}

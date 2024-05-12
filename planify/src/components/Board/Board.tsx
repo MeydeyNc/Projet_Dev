@@ -34,6 +34,7 @@ export default function Board() {
 
             {lists.map(list => (
                 < List 
+                key={list.id}
                 {...list} 
                 setTasks={setTasks}
                 tasks={
