@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Barre de navigation</title>
+    <!-- Include Tailwind CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <!-- Include custom styles -->
+    <style>
+        /* Ajouter des styles personnalisés ici si nécessaire */
+        .clock-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .clock {
+            position: relative;
+            width: 200px;
+            height: 200px;
+            border: 2px solid black;
+            border-radius: 50%;
+            margin: 0 auto;
+        }
+
+        .hour, .minute, .second {
+            position: absolute;
+            width: 4px;
+            background-color: black;
+            transform-origin: center bottom;
+            transform: rotate(90deg);
+            left: calc(50% - 2px);
+            border-radius: 10rem;
+        }
+
+        .hour {
+            height: 40px;
+            top: 60px;
+        }
+
+        .minute {
+            height: 70px;
+            top: 30px;
+        }
+
+        .second {
+            height: 90px;
+            background-color: red;
+            top: 10px;
+        }
+
+        .date {
+            margin-top: 10px;
+            font-size: 18px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Barre de navigation -->
+    <nav class="bg-gray-800 text-white py-4">
+        <div class="container mx-auto flex justify-between items-center">
+            <!-- Bouton de gauche -->
+            <div class="flex items-center">
+                <!-- Menu déroulant -->
+                <div class="relative">
+                    <button class="focus:outline-none mr-6">
+                        <svg class="w-6 h-6 fill-current" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                            <!-- Icône de menu -->
+                            <path fill-rule="evenodd"
+                                d="M4 5a1 1 0 0 1 0-2h12a1 1 0 0 1 0 2H4zm0 5a1 1 0 0 1 0-2h12a1 1 0 0 1 0 2H4zm0 5a1 1 0 0 1 0-2h12a1 1 0 0 1 0 2H4z"
+                                clip-rule="evenodd" />
+                        </svg>
+                    </button>
+
+                    <div class="absolute bg-gray-800 text-white rounded-md py-2 mt-1 hidden">
+                        <a href="#" class="block px-4 py-2 hover:bg-gray-700">Sous-bouton 1</a>
+                        <a href="#" class="block px-4 py-2 hover:bg-gray-700">Sous-bouton 2</a>
+                        <a href="#" class="block px-4 py-2 hover:bg-gray-700">Sous-bouton 3</a>
+                        <a href="#" class="block px-4 py-2 hover:bg-gray-700">Sous-bouton 4</a>
+                    </div>
+                </div>
+            </div>
+            <!-- Titre au centre -->
+            <div class="text-xl font-bold">Planify</div>
+            <!-- Bouton de droite -->
+            <div class="flex items-center">
+                <a href="#" class="mr-6">
+                    <!-- Icône de profil -->
+                    <svg class="w-6 h-6 fill-current" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd"
+                            d="M10 2a6 6 0 0 0-6 6c0 2.755 1.845 5.236 4.468 6.09-.08.566-.223 1.124-.43 1.67a6.005 6.005 0 0 1-.938 1.748c-.47.47-1.405 1.471-2.174 2.857-.003.005-.006.01-.01.016a.65.65 0 0 0-.08.088l-.014.018c-.4.547-.914.992-1.523 1.32a7.002 7.002 0 0 0 9.16-10.29c-.81-.81-1.756-1.472-2.774-1.94A5.969 5.969 0 0 0 10 2zm0 2a4 4 0 0 1 4 4c0 1.225-.505 2.315-1.318 3.15-.497.53-1.067.924-1.637 1.19-.77-.41-1.68-.41-2.45 0-.57-.266-1.14-.66-1.637-1.19C6.504 10.315 6 9.225 6 8a4 4 0 0 1 4-4zm0 10c2.206 0 4-1.794 4-4s-1.794-4-4-4-4 1.794-4 4 1.794 4 4 4zm7.293-11.707a1 1 0 1 1 1.414 1.414l-.003.003-1.414-1.414.003-.003z"
+                            clip-rule="evenodd" />
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Horloge -->
+    <div class="text-center mt-4">
+        <div class="clock-container">
+            <div class="clock">
+                <div class="hour" id="hour"></div>
+                <div class="minute" id="minute"></div>
+                <div class="second" id="second"></div>
+            </div>
+            <div class="date" id="date"></div>
+        </div>
+    </div>
+
+    <!-- JavaScript pour gérer le menu déroulant et mettre à jour l'horloge -->
+    <script>
+        // Sélectionner le bouton du menu déroulant et son contenu
+        const button = document.querySelector('.relative button');
+        const menu = document.querySelector('.relative .hidden');
+
+        // Ajouter un gestionnaire d'événements pour le survol
+        button.addEventListener('mouseenter', () => {
+            menu.classList.remove('hidden');
+        });
+
+        // Ajouter un gestionnaire d'événements pour la sortie du survol
+        button.addEventListener('mouseleave', () => {
+            menu.classList.add('hidden');
+        });
+
+        // Mettre à jour l'horloge et la date
+        function updateClock() {
+            const now = new Date();
+            const hour = now.getHours();
+            const minute = now.getMinutes();
+            const second = now.getSeconds();
+            const hourElement = document.getElementById('hour');
+            const minuteElement = document.getElementById('minute');
+            const secondElement = document.getElementById('second');
+            const dateElement = document.getElementById('date');
+
+            // Calculer l'angle de rotation pour chaque aiguille
+            const hourAngle = hour * 30 + (0.5 * minute); // 30 degrés par heure, 0.5 degré par minute
+            const minuteAngle = minute * 6 + (0.1 * second); // 6 degrés par minute, 0.1 degré par seconde
+            const secondAngle = second * 6; // 6 degrés par seconde
+
+            // Appliquer la rotation à chaque aiguille
+            hourElement.style.transform = `rotate(${hourAngle}deg)`;
+            minuteElement.style.transform = `rotate(${minuteAngle}deg)`;
+            secondElement.style.transform = `rotate(${secondAngle}deg)`;
+
+            // Mettre à jour la date
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            dateElement.textContent = now.toLocaleDateString('fr-FR', options);
+        }
+
+        // Mettre à jour l'horloge et la date chaque seconde
+        setInterval(updateClock, 1000);
+
+        // Mettre à jour l'horloge et la date une fois au chargement de la page
+        updateClock();
+    </script>
+</body>
+
+</html>
